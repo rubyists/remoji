@@ -33,12 +33,8 @@ Normal List
 
 ----
 % emj -c Animal cat
-{
-    :"cat face" => "🐱"
-}
-{
-    :cat => "🐈"
-}
+cat face: 🐱
+cat: 🐈
 ----
 
 Without any metadata
@@ -46,4 +42,20 @@ Without any metadata
 ----
 % emj -n -c Animal cat
 🐱 🐈
+----
+
+Show all categories / subcategories
+
+----
+% emj --cats
+% emj --subs
+----
+
+Show all emojis in the subcategory 'monkey-face' with lots of verbose data.
+
+----
+% emj -s monkey-face
+see-no-evil monkey: {:code=>"U+1F648", :sym=>"🙈", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
+hear-no-evil monkey: {:code=>"U+1F649", :sym=>"🙉", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
+speak-no-evil monkey: {:code=>"U+1F64A", :sym=>"🙊", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
 ----

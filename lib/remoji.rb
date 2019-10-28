@@ -4,7 +4,6 @@ require 'pathname'
 require 'optparse'
 require 'ostruct'
 require 'json'
-require 'awesome_print'
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
@@ -65,7 +64,7 @@ class Remoji
   end
 
   def initialize
-    @options = OpenStruct.new
+    @options = OpenStruct.new verbose: 0
     verify_cache!
   end
 
@@ -123,7 +122,7 @@ class Remoji
     OptionParser.new do |o|
       o.banner = "#{$PROGRAM_NAME} [options] EMOJI ANOTHER_EMOJI ..."
       o.separator 'Where EMOJI is an emoji name to search for'
-      %i[cat subcat details cats subcats].each do |sym|
+      %i[cat subcat details cats subcats verbose].each do |sym|
         send "#{sym}_opt".to_sym, o
       end
       o.on('-h', '--help') do
@@ -133,15 +132,19 @@ class Remoji
     end.parse!(args)
   end
 
+  def verbose_opt(opt)
+    opt.on('-v', '--verbose', 'Increase verbosity') { @options.verbose += 1 }
+  end
+
   def cats_opt(opt)
-    opt.on('--subs', '--subcategories') do
+    opt.on('--subs', '--subcategories', 'List subcategories') do
       ap subcategories
       exit
     end
   end
 
   def subcats_opt(opt)
-    opt.on('--cats', '--categories') do
+    opt.on('--cats', '--categories', 'List Categories') do
       ap categories
       exit
     end
@@ -163,7 +166,13 @@ class Remoji
     if options.no
       puts them.map { |_k, v| v[:sym] }.join(' ')
     else
-      them.each { |k, v| ap(k => v[:sym]) }
+      them.each do |k, v|
+        if options.verbose.positive?
+          puts "#{k}: #{v}"
+        else
+          puts "#{k}: #{v[:sym]}"
+        end
+      end
     end
   end
 end
