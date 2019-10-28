@@ -4,6 +4,11 @@ Doc Writer <tj@rubyists.com>
 :toc:
 
 Remoji is a simple emoji command line tool. It will search for and output emojis.
+This was written in order to be able to easily script emojis in various terminal
+and command line interfaces (specifically for irssi, initially). Inspired by
+`em-keyboard`, a python program which was meant to do the same. However, the output
+of `em-keyboard` was not suitable for piping to `xclip` (or in fact to piping at all).
+Remoji consists of a single executable, `emj`.
 
 == Installation
 ----
@@ -16,14 +21,19 @@ NOTE: The first time emj runs, it will offer to import an emoji database. You
 must have internet access for this
 
 ----
+% emj --help
+
 emj [options] EMOJI ANOTHER_EMOJI ...
 
 Where EMOJI is an emoji name to search for
     -c, --cat CAT                    Find matches in a category
     -s, --subcat CAT                 Find matches in a subcategory
     -n, --no-details                 Just print the emojis
-        --subs, --subcategories
-        --cats, --categories
+        --subs, --subcategories      List subcategories
+        --cats, --categories         List Categories
+    -v, --verbose                    Increase verbosity
+    -e, --exact                      Exactly match the emoji given, do not search for it
+    -r, --regex                      Consider each argument a regular expression
     -h, --help
 ----
 
@@ -37,7 +47,7 @@ cat face: 🐱
 cat: 🐈
 ----
 
-Without any metadata (-n)
+Same search without any metadata (-n)
 
 ----
 % emj -n -c Animal cat
@@ -81,4 +91,12 @@ soap: 🧼
 sponge: 🧽
 fire extinguisher: 🧯
 shopping cart: 🛒
+----
+
+Print the emoji that exactly matches 'cat'
+
+----
+% emj -ne cat
+
+🐈
 ----

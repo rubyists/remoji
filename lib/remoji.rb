@@ -151,7 +151,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
   end
 
   def regex_opt(opt)
-    opt.on('-r', '--regex', 'Consider each argument a regular expressoin') { @options.regex = true }
+    opt.on('-r', '--regex', 'Consider each argument a regular expression') { @options.regex = true }
   end
 
   def verbose_opt(opt)
