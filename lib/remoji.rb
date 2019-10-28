@@ -7,6 +7,7 @@ require 'json'
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
+require 'awesome_print'
 
 # The Remoji command
 class Remoji
