@@ -100,3 +100,11 @@ Print the emoji that exactly matches 'cat'
 
 🐈
 ----
+
+Print Jenny's number
+
+----
+% emj 'keycap: 8' 'keycap: 6' 'keycap: 7' 'minus sign' 'minus sign' 'keycap: 5' 'keycap: 3' 'keycap: 0' 'keycap: 9' -n
+
+8️⃣ 6️⃣ 7️⃣ ➖ 5️⃣ 3️⃣ 0️⃣ 9️⃣
+----
