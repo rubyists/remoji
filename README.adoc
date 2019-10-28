@@ -29,7 +29,7 @@ Where EMOJI is an emoji name to search for
 
 == Examples
 
-Normal List
+Normal List, searching the main category 'Animal' for 'cat'
 
 ----
 % emj -c Animal cat
@@ -37,7 +37,7 @@ cat face: 🐱
 cat: 🐈
 ----
 
-Without any metadata
+Without any metadata (-n)
 
 ----
 % emj -n -c Animal cat
@@ -58,4 +58,27 @@ Show all emojis in the subcategory 'monkey-face' with lots of verbose data.
 see-no-evil monkey: {:code=>"U+1F648", :sym=>"🙈", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
 hear-no-evil monkey: {:code=>"U+1F649", :sym=>"🙉", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
 speak-no-evil monkey: {:code=>"U+1F64A", :sym=>"🙊", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
+----
+
+Show all emojis in the 'household' subcategory
+
+----
+% emj -s household
+door: 🚪
+bed: 🛏
+couch and lamp: 🛋
+chair: 🪑
+toilet: 🚽
+shower: 🚿
+bathtub: 🛁
+razor: 🪒
+lotion bottle: 🧴
+safety pin: 🧷
+broom: 🧹
+basket: 🧺
+roll of paper: 🧻
+soap: 🧼
+sponge: 🧽
+fire extinguisher: 🧯
+shopping cart: 🛒
 ----
