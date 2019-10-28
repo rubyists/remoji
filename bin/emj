@@ -1,0 +1,98 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+require 'pathname'
+require 'optparse'
+require 'ostruct'
+require 'json'
+require 'awesome_print'
+require 'pry'
+require 'nokogiri'
+require 'open-uri'
+
+require 'json'
+def find_medhead(elem)
+  return medhead(elem).text if medhead(elem)
+
+  find_medhead(elem.previous_sibling)
+end
+
+def medhead(elem)
+  elem.css('th[class=mediumhead]').empty? ? nil : elem.css('th[class=mediumhead]')
+end
+
+def find_bighead(elem)
+  return bighead(elem).text if bighead(elem)
+
+  find_bighead(elem.previous_sibling)
+end
+
+def bighead(elem)
+  elem.css('th[class=bighead]').empty? ? nil : elem.css('th[class=bighead]')
+end
+
+def import_emojis(file) # rubocop:disable Metrics/AbcSize
+  doc = Nokogiri(open('http://unicode.org/emoji/charts/full-emoji-list.html').read)
+  tds = doc.xpath('//table/tr/td')
+  all = tds.each_slice(15)
+  hash = {}
+
+  all.each do |n|
+    hash[n.last.text] = {
+      code: n[1].text,
+      sym: n[2].text,
+      cat: find_bighead(n.last.parent),
+      subcat: find_medhead(n.last.parent)
+    }
+  end
+
+  file.open('w+') { |f| f.puts JSON.pretty_generate(hash) }
+end
+
+emojis = Pathname('/tmp/emojis.json')
+unless emojis.exist?
+  warn "No #{emojis} found. Import?"
+  yn = $stdin.getc
+  raise 'Ok, bailing!' unless yn =~ /^y/i
+
+  warn 'Ok, importing'
+  import_emojis emojis
+end
+
+@options = OpenStruct.new
+opts = OptionParser.new do |o|
+  o.on('-sCAT', '--subcat CAT', 'Find matches in a subcategory') { |s| @options.subcat = s }
+  o.on('-cCAT', '--cat CAT', 'Find matches in a category') { |s| @options.cat = s }
+  o.on('-n', '--no-details', 'Just print the emojis') { |_| @options.no = true }
+  o.on('-h', '--help') do
+    puts opts
+    exit
+  end
+end.parse!
+
+def output(them, options = OpenStruct.new)
+  if options.no
+    puts them.map { |_k, v| v[:sym] }.join(' ')
+  else
+    them.each { |k, v| ap(k => v[:sym]) }
+  end
+end
+db = JSON.parse(emojis.read, symbolize_names: true)
+filtered = if @options.subcat
+             db.select { |_k, v| v[:subcat] =~ /#{@options.subcat}/i }
+           elsif @options.cat
+             db.select { |_k, v| v[:cat] =~ /#{@options.cat}/i }
+           else
+             db
+           end
+
+if ARGV.empty?
+  output filtered, @options
+  exit
+end
+
+found = {}
+ARGV.each do |argv|
+  found.merge!(filtered.select { |k, _v| k =~ /#{argv}/i })
+end
+
+output found, @options
