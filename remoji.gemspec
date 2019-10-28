@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = 'Search for and show emojis'
   s.authors = ['tj@rubyists.com']
   s.email = 'tj@rubyists.com'
-  s.files += Dir.glob('bin/*') + Dir.glob('*.rb') + Dir.glob('*.adoc') + Dir.glob('COPYING')
+  s.files += Dir.glob('bin/*') + Dir.glob('**/*.rb') + Dir.glob('*.adoc') + Dir.glob('COPYING')
   s.bindir = 'bin'
   s.executables = ['emj']
   s.add_dependency 'awesome_print', '~> 1.8.0'
