@@ -111,9 +111,9 @@ class Remoji # rubocop:disable Metrics/ClassLength
       exit
     end
 
-    found = {}
+    found = []
     args.each do |arg|
-      found.merge!(find_in_filter_hash(arg))
+      found << find_in_filter_hash(arg)
     end
 
     output found
@@ -186,9 +186,11 @@ class Remoji # rubocop:disable Metrics/ClassLength
 
   def output(them)
     if @options.no
-      puts them.map { |_k, v| v[:sym] }.join(' ')
+      puts them.map { |k| k[k.keys.first][:sym] }.join(' ')
     else
-      them.each do |k, v|
+      them.each do |k|
+        key = k.keys.first
+        v = k[key]
         if @options.verbose.positive?
           puts "#{k}: #{v}"
         else
