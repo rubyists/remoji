@@ -82,8 +82,10 @@ class Remoji
 
     warn "No #{@emoji_file} found. Import?"
     yn = $stdin.getc
-    raise 'Ok, bailing!' unless yn =~ /^y/i
-
+    unless yn =~ /^y/i
+      warn 'Ok, Bailing!'
+      exit 1
+    end
     warn 'Ok, importing'
     import_emojis!
   end
