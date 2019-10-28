@@ -1,0 +1,44 @@
+= Remoji
+Doc Writer <tj@rubyists.com>
+2019-10-28
+:toc:
+
+Remoji is a simple emoji command line tool. It will search for output emojis.
+
+== Installation
+----
+% gem i remoji
+----
+
+== Usage
+
+emj [options] EMOJI ANOTHER_EMOJI ...
+
+Where EMOJI is an emoji name to search for
+    -c, --cat CAT                    Find matches in a category
+    -s, --subcat CAT                 Find matches in a subcategory
+    -n, --no-details                 Just print the emojis
+        --subs, --subcategories
+        --cats, --categories
+    -h, --help
+
+== Examples
+
+Normal List
+
+----
+% emj -c Animal cat
+{
+    :"cat face" => "🐱"
+}
+{
+    :cat => "🐈"
+}
+----
+
+Without any metadata
+
+----
+% emj -n -c Animal cat
+🐱 🐈
+----
