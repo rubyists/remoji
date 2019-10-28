@@ -12,6 +12,9 @@ Remoji is a simple emoji command line tool. It will search for and output emojis
 
 == Usage
 
+NOTE: The first time emj runs, it will offer to import an emoji database. You
+must have internet access for this
+
 ----
 emj [options] EMOJI ANOTHER_EMOJI ...
 

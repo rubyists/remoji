@@ -9,8 +9,6 @@ require 'pry'
 require 'nokogiri'
 require 'open-uri'
 
-require 'json'
-
 # The Remoji command
 class Remoji
   EMOJI_TABLE = 'http://unicode.org/emoji/charts/full-emoji-list.html'.freeze
@@ -66,11 +64,17 @@ class Remoji
     emoji_file.open('w+') { |f| f.puts JSON.pretty_generate(hash) }
   end
 
-  attr_reader :emoji_file
   def initialize
-    @emoji_file = Pathname('/tmp/emojis.json')
     @options = OpenStruct.new
     verify_cache!
+  end
+
+  def emoji_file
+    return @emoji_file if @emoji_file
+
+    local = Pathname(ENV['HOME']).join('.local/remoji')
+    FileUtils.mkdir_p local.to_s unless local.exist?
+    @emoji_file = local.join('emojis.json')
   end
 
   def verify_cache!
