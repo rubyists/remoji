@@ -3,7 +3,7 @@ Doc Writer <tj@rubyists.com>
 2019-10-28
 :toc:
 
-Remoji is a simple emoji command line tool. It will search for output emojis.
+Remoji is a simple emoji command line tool. It will search for and output emojis.
 
 == Installation
 ----
