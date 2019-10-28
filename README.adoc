@@ -12,6 +12,7 @@ Remoji is a simple emoji command line tool. It will search for and output emojis
 
 == Usage
 
+----
 emj [options] EMOJI ANOTHER_EMOJI ...
 
 Where EMOJI is an emoji name to search for
@@ -21,6 +22,7 @@ Where EMOJI is an emoji name to search for
         --subs, --subcategories
         --cats, --categories
     -h, --help
+----
 
 == Examples
 
