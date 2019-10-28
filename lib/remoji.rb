@@ -10,7 +10,7 @@ require 'open-uri'
 require 'awesome_print'
 
 # The Remoji command
-class Remoji
+class Remoji # rubocop:disable Metrics/ClassLength
   EMOJI_TABLE = 'http://unicode.org/emoji/charts/full-emoji-list.html'.freeze
 
   def self.run!(args)
@@ -107,23 +107,36 @@ class Remoji
     parse_opts! args
 
     if args.empty?
-      output filter_hash, @options
+      output filter_hash
       exit
     end
 
     found = {}
-    args.each do |argv|
-      found.merge!(filter_hash.select { |k, _v| k =~ /#{argv}/i })
+    args.each do |arg|
+      found.merge!(find_in_filter_hash(arg))
     end
 
-    output found, @options
+    output found
+  end
+
+  def find_in_filter_hash(arg)
+    filter_hash.select do |k, _v|
+      s = k.to_s
+      if @options.exact
+        s == arg
+      elsif @options.regex
+        s =~ /#{arg}/
+      else
+        s =~ /#{arg}/i
+      end
+    end
   end
 
   def parse_opts!(args)
     OptionParser.new do |o|
       o.banner = "#{$PROGRAM_NAME} [options] EMOJI ANOTHER_EMOJI ..."
       o.separator 'Where EMOJI is an emoji name to search for'
-      %i[cat subcat details cats subcats verbose].each do |sym|
+      %i[cat subcat details cats subcats verbose exact regex].each do |sym|
         send "#{sym}_opt".to_sym, o
       end
       o.on('-h', '--help') do
@@ -131,6 +144,14 @@ class Remoji
         exit
       end
     end.parse!(args)
+  end
+
+  def exact_opt(opt)
+    opt.on('-e', '--exact', 'Exactly match the emoji given, do not search for it') { @options.exact = true }
+  end
+
+  def regex_opt(opt)
+    opt.on('-r', '--regex', 'Consider each argument a regular expressoin') { @options.regex = true }
   end
 
   def verbose_opt(opt)
@@ -163,12 +184,12 @@ class Remoji
     opt.on('-n', '--no-details', 'Just print the emojis') { |_| @options.no = true }
   end
 
-  def output(them, options = OpenStruct.new)
-    if options.no
+  def output(them)
+    if @options.no
       puts them.map { |_k, v| v[:sym] }.join(' ')
     else
       them.each do |k, v|
-        if options.verbose.positive?
+        if @options.verbose.positive?
           puts "#{k}: #{v}"
         else
           puts "#{k}: #{v[:sym]}"
