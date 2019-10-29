@@ -107,7 +107,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
     parse_opts! args
 
     if args.empty?
-      output filter_hash
+      output(filter_hash.keys.map { |key| { key => filter_hash[key] } })
       exit
     end
 
@@ -192,9 +192,9 @@ class Remoji # rubocop:disable Metrics/ClassLength
         key = k.keys.first
         v = k[key]
         if @options.verbose.positive?
-          puts "#{k}: #{v}"
+          puts "#{key}: #{v}"
         else
-          puts "#{k}: #{v[:sym]}"
+          puts "#{key}: #{v[:sym]}"
         end
       end
     end
