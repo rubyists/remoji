@@ -184,18 +184,23 @@ class Remoji # rubocop:disable Metrics/ClassLength
     opt.on('-n', '--no-details', 'Just print the emojis') { |_| @options.no = true }
   end
 
-  def output(them)
-    if @options.no
-      puts them.map { |k| k[k.keys.first][:sym] }.join(' ')
-    else
-      them.each do |k|
-        key = k.keys.first
-        v = k[key]
-        if @options.verbose.positive?
-          puts "#{key}: #{v}"
-        else
-          puts "#{key}: #{v[:sym]}"
-        end
+  def die!(msg, code = 1)
+    warn msg
+    exit code
+  end
+
+  def output(them) # rubocop:disab
+    die! 'No matching emojis found', 2 if them.first == {}
+
+    them.each do |k|
+      key = k.keys.first
+      v = k[key]
+      if @options.no
+        print "#{v[:sym]} "
+      elsif @options.verbose.positive?
+        puts "#{key}: #{v}"
+      else
+        puts "#{key}: #{v[:sym]}"
       end
     end
   end

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'remoji'
-  s.version = '0.1.1'
+  s.version = '0.1.2'
   s.required_ruby_version = '~> 2'
   s.summary = 'Emojis'
   s.description = 'Search for and show emojis'
