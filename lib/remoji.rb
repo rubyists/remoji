@@ -90,6 +90,10 @@ class Remoji # rubocop:disable Metrics/ClassLength
     import_emojis!
   end
 
+  def filter_array
+    @filter_array ||= filter_hash.to_a
+  end
+
   def filter_hash
     return @filter_hash if @filter_hash
 
@@ -107,16 +111,20 @@ class Remoji # rubocop:disable Metrics/ClassLength
     parse_opts! args
 
     if args.empty?
-      output(filter_hash.keys.map { |key| { key => filter_hash[key] } })
+      output filter_array
       exit
     end
 
     found = []
     args.each do |arg|
-      found << find_in_filter_hash(arg)
+      found += find_in_filter_array(arg)
     end
 
     output found
+  end
+
+  def find_in_filter_array(arg)
+    find_in_filter_hash(arg).to_a || []
   end
 
   def find_in_filter_hash(arg)
@@ -190,19 +198,18 @@ class Remoji # rubocop:disable Metrics/ClassLength
   end
 
   def output(them) # rubocop:disab
-    die! 'No matching emojis found', 2 if them.first == {}
+    die! 'No matching emojis found', 2 if them.empty?
 
-    them.each do |k|
-      key = k.keys.first
-      v = k[key]
+    them.each do |name, attrs|
       if @options.no
-        print "#{v[:sym]} "
+        print "#{attrs[:sym]} "
       elsif @options.verbose.positive?
-        puts "#{key}: #{v}"
+        puts "#{name}: #{attrs}"
       else
-        puts "#{key}: #{v[:sym]}"
+        puts "#{name}: #{attrs[:sym]}"
       end
     end
+    print "\n" if @options.no
   end
 end
 
