@@ -2,6 +2,13 @@
 Doc Writer <tj@rubyists.com>
 2019-10-28
 :toc:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 
 Remoji is a simple emoji command line tool. It will search for and output emojis.
 This was written in order to be able to easily script emojis in various terminal
@@ -107,4 +114,29 @@ Print Jenny's number
 % emj 'keycap: 8' 'keycap: 6' 'keycap: 7' 'minus sign' 'minus sign' 'keycap: 5' 'keycap: 3' 'keycap: 0' 'keycap: 9' -n
 
 8️⃣ 6️⃣ 7️⃣ ➖ 5️⃣ 3️⃣ 0️⃣ 9️⃣
+----
+
+## Usage with `irssi`
+
+### Set up aliases
+
+----
+/alias em /exec emj # <1>
+/alias emj /exec -o emj -n # <2>
+----
+<1> This is used to search for emojis. It only shows up in your client
+<2> This is used to display emojis and output them to your current chanel
+
+### (R)Emoji!
+
+Set some aliases up for fun/common stuff
+
+----
+/alias smiles /emj -s smiles
+/smiles
+11/09-14:32 < bougyman> 😀 😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 😉 😊 😇 
+11/09-14:32 -=- Irssi: process 0 (emj -n -s smiling) terminated with return code 0
+/alias monkeysee /emj 'evil monkey'
+11/09-14:33 < bougyman> 🙈 🙉 🙊 
+11/09-14:33 -=- Irssi: process 0 (emj -n 'evil monkey') terminated with return code 0
 ----
