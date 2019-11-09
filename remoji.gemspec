@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'remoji'
-  s.version = '0.1.3'
+  s.version = '0.1.4'
   s.required_ruby_version = '~> 2'
   s.summary = 'Emojis'
   s.description = 'Search for and show emojis'
@@ -12,4 +12,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'awesome_print', '~> 1.8.0'
   s.add_dependency 'nokogiri', '~> 1'
   s.add_dependency 'rubocop-performance', '~> 1.4'
+  s.add_dependency 'pry'
 end
