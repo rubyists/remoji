@@ -71,7 +71,7 @@ Show all categories / subcategories
 Show all emojis in the subcategory 'monkey-face' with lots of verbose data.
 
 ----
-% emj -s monkey-face
+% emj -vs monkey-face
 see-no-evil monkey: {:code=>"U+1F648", :sym=>"🙈", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
 hear-no-evil monkey: {:code=>"U+1F649", :sym=>"🙉", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
 speak-no-evil monkey: {:code=>"U+1F64A", :sym=>"🙊", :cat=>"Smileys & Emotion", :subcat=>"monkey-face"}
@@ -111,7 +111,7 @@ Print the emoji that exactly matches 'cat'
 Print Jenny's number
 
 ----
-% emj 'keycap: 8' 'keycap: 6' 'keycap: 7' 'minus sign' 'minus sign' 'keycap: 5' 'keycap: 3' 'keycap: 0' 'keycap: 9' -n
+% emj -n 'keycap: 8' 'keycap: 6' 'keycap: 7' 'minus sign' 'minus sign' 'keycap: 5' 'keycap: 3' 'keycap: 0' 'keycap: 9'
 
 8️⃣ 6️⃣ 7️⃣ ➖ 5️⃣ 3️⃣ 0️⃣ 9️⃣
 ----
@@ -125,7 +125,7 @@ Print Jenny's number
 /alias emj /exec -o emj -n # <2>
 ----
 <1> This is used to search for emojis. It only shows up in your client
-<2> This is used to display emojis and output them to your current chanel
+<2> This is used to display emojis and output them to your current channel
 
 ### (R)Emoji!
 
