@@ -154,7 +154,7 @@ Set some aliases up for fun/common stuff
 
 This is every emoji defined in http://unicode.org/emoji/charts/full-emoji-list.html[The Full Unicode Emoji List]
 
-====
+____
 grinning face: 😀
 grinning face with big eyes: 😃
 grinning face with smiling eyes: 😄
@@ -1897,4 +1897,4 @@ flag: Zimbabwe: 🇿🇼
 flag: England: 🏴
 flag: Scotland: 🏴
 flag: Wales: 🏴
-====
+____
