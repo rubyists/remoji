@@ -18,6 +18,15 @@ of `em-keyboard` was not suitable for piping to `xclip` (or in fact to piping at
 Remoji consists of a single executable, `emj`.
 
 == Installation
+
+[INFO]
+====
+Ruby and rubygems must be installed. If you utilize your operating system ruby, you may
+need administrator privileges to run the `gem` commands. If you do not yet have ruby/gems
+installed or do _not_ want to install with administrator privileges, https://github.com/rbenv/rbenv
+is recommended.
+====
+
 ----
 % gem i remoji
 ----
