@@ -154,6 +154,8 @@ Set some aliases up for fun/common stuff
 
 This is every emoji defined in http://unicode.org/emoji/charts/full-emoji-list.html[The Full Unicode Emoji List]
 
+TIP: This is the output of `emj` with no arguments.
+
 ____
   grinning face: 😀
   grinning face with big eyes: 😃
