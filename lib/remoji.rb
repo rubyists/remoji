@@ -206,7 +206,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
       elsif @options.verbose.positive?
         puts "#{name}: #{attrs}"
       else
-        puts "#{name}: #{attrs[:sym]}"
+        puts "#{attrs[:sym]} : #{name}"
       end
     end
     print "\n" if @options.no
