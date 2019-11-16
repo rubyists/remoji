@@ -19,7 +19,7 @@ Remoji consists of a single executable, `emj`.
 
 == Installation
 
-[INFO]
+[IMPORTANT]
 ====
 Ruby and rubygems must be installed. If you utilize your operating system ruby, you may
 need administrator privileges to run the `gem` commands. If you do not yet have ruby/gems
