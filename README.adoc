@@ -145,16 +145,30 @@ Print Jenny's number
 
 ### (R)Emoji!
 
-Set some aliases up for fun/common stuff
+Set further aliases up for fun/common stuff
 
 ----
-/alias smiles /emj -s smiles
+/alias smiles /emj -s :smiles:
 /smiles
 11/09-14:32 < bougyman> 😀 😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 😉 😊 😇 
 11/09-14:32 -=- Irssi: process 0 (emj -n -s smiling) terminated with return code 0
-/alias monkeysee /emj 'evil monkey'
+/alias monkeysee /emj :evil monkey:
 11/09-14:33 < bougyman> 🙈 🙉 🙊 
 11/09-14:33 -=- Irssi: process 0 (emj -n 'evil monkey') terminated with return code 0
+----
+
+Or just use casually.
+
+----
+/emj The :cow: jumped over the :moon:
+11/16-21:41 <bougyman> The 🤠 🐮 🐄 jumped over the 🥮 🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘 🌙 🌚 🌛 🌜 🌝 🎑
+----
+
+Get more exact
+
+----
+/emj -e The :cow: jumped over the :full moon:.
+11/16-21:41 <bougyman> The 🐄 jumped over the 🌕.
 ----
 
 ## Test your Emoji Support
