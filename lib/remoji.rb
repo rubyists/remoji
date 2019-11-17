@@ -120,6 +120,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
   end
 
   def formatted(name, attrs)
+    return attrs[:sym] if @options.no
     return "#{name}: #{attrs}" if @options.verbose.positive?
 
     [attrs[:sym], name].join(' : ')
@@ -148,7 +149,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
 
   def replace_emojis(string)
     string.gsub(/:[^:]+:/) do |r|
-      find_in_filter_array(r[1..-2])&.flatten&.last&.[](:sym) || r
+      string_for r[1..-2]
     end
   end
 
