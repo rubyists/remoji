@@ -39,12 +39,12 @@ must have internet access for this
 ----
 % emj --help
 
-emj [options] EMOJI ANOTHER_EMOJI ...
+emj [options] <EMOJI ANOTHER_EMOJI ... | String With :substitutions: (with -n)>
 
 Where EMOJI is an emoji name to search for
     -c, --cat CAT                    Find matches in a category
     -s, --subcat CAT                 Find matches in a subcategory
-    -n, --no-details                 Just print the emojis
+    -n, --no-details                 Treat arguments as a string and subsitute :emoji: blocks
         --subs, --subcategories      List subcategories
         --cats, --categories         List Categories
     -v, --verbose                    Increase verbosity
@@ -63,18 +63,18 @@ cat face: 🐱
 cat: 🐈
 ----
 
-Same search without any metadata (-n)
+Same search using string substitition
 
 ----
-% emj -n -c Animal cat
+% emj -n -c Animal :cat:
 🐱 🐈
 ----
 
 Using strings inline with emoji with -n
 
 ----
-% emj -n S:The blue S:Cow cow
-The 💙 📘 🔵 🟦 🔷 🔹 Cow 🤠 🐮 🐄
+% emj -n The :cow: jumped over the :moon:
+The 🐄 jumped over the 🎑
 ----
 
 Show all categories / subcategories

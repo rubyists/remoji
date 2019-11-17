@@ -14,7 +14,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
   EMOJI_TABLE = 'http://unicode.org/emoji/charts/full-emoji-list.html'.freeze
 
   def self.run!(args)
-    new.execute! args
+    new(args).execute!
   end
 
   def categories
@@ -64,7 +64,9 @@ class Remoji # rubocop:disable Metrics/ClassLength
     emoji_file.open('w+') { |f| f.puts JSON.pretty_generate(hash) }
   end
 
-  def initialize
+  attr_reader :args
+  def initialize(args)
+    @args = args
     @options = OpenStruct.new verbose: 0
     verify_cache!
   end
@@ -107,24 +109,47 @@ class Remoji # rubocop:disable Metrics/ClassLength
                    end
   end
 
-  def execute!(args)
+  def execute!
     parse_opts! args
-
     if args.empty?
-      output filter_array
+      puts output(filter_array)
       exit
     end
 
-    found = []
-    args.each do |arg|
-      found << if arg.match?(/^S:/)
-                 arg
-               else
-                 find_in_filter_array(arg)
-               end
-    end
+    puts output
+  end
 
-    output found.compact.flatten 1
+  def formatted(name, attrs)
+    return "#{name}: #{attrs}" if @options.verbose.positive?
+
+    [attrs[:sym], name].join(' : ')
+  end
+
+  def output(arr = nil)
+    if arr
+      strings = arr.map { |name, attrs| formatted name, attrs }
+      sep = @options.no ? ' ' : "\n"
+      return strings.join(sep)
+    end
+    return replace_emojis args.join(' ') if @options.no
+
+    args.each_with_object([]) do |q, s|
+      s << string_for(q)
+    end.join.squeeze(' ')
+  end
+
+  def string_for(emoji)
+    found = find_in_filter_array(emoji).each_with_object([]) { |f, arr| arr << f }
+    sep = @options.no ? ' ' : "\n"
+    found.each_with_object([]) do |f, s|
+      s << formatted(*f)
+    end.join sep
+  end
+
+  def replace_emojis(string)
+    string.gsub(/:[^:]+:/) do |r|
+      find_in_filter_array(r[1..-2])&.flatten&.last&.[](:sym) || r
+    end
   end
 
   def find_in_filter_array(arg)
@@ -146,8 +171,9 @@ class Remoji # rubocop:disable Metrics/ClassLength
 
   def parse_opts!(args)
     OptionParser.new do |o|
-      o.banner = "#{$PROGRAM_NAME} [options] EMOJI ANOTHER_EMOJI ..."
+      o.banner = "#{$PROGRAM_NAME} [options] <EMOJI ANOTHER_EMOJI ... | String With :substitutions: (with -n)>"
       o.separator 'Where EMOJI is an emoji name to search for'
+      o.separator 'With -n, all arguments are treated as a string and :emoji: blocks are replaced with matches, if any'
       %i[cat subcat details cats subcats verbose exact regex].each do |sym|
         send "#{sym}_opt".to_sym, o
       end
@@ -193,32 +219,12 @@ class Remoji # rubocop:disable Metrics/ClassLength
   end
 
   def details_opt(opt)
-    opt.on('-n', '--no-details', 'Just print the emojis') { |_| @options.no = true }
+    opt.on('-n', '--no-details', 'Just print the string with :emojis: substituded') { |_| @options.no = true }
   end
 
   def die!(msg, code = 1)
     warn msg
     exit code
-  end
-
-  def output(them)
-    puts display(them)
-  end
-
-  def display(them) # rubocop:disab
-    die! 'No matching emojis found', 2 if them.empty?
-
-    join_char = @options.no ? ' ' : "\n"
-    them.map do |name, attrs|
-      attrs ||= { sym: name.split('S:').last, type: 'Raw String' }
-      if @options.no
-        attrs[:sym]
-      elsif @options.verbose.positive?
-        "#{name}: #{attrs}"
-      else
-        [attrs[:sym], name].join(' : ')
-      end
-    end.join(join_char).squeeze(join_char)
   end
 end
 
