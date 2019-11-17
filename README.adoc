@@ -145,7 +145,7 @@ Print Jenny's number
 
 ### (R)Emoji!
 
-Set further aliases up for fun/common stuff
+#### Set further aliases up for fun/common stuff
 
 ----
 /alias smiles /emj -s :smiles:
@@ -157,14 +157,14 @@ Set further aliases up for fun/common stuff
 11/09-14:33 -=- Irssi: process 0 (emj -n 'evil monkey') terminated with return code 0
 ----
 
-Or just use casually.
+#### Or just use casually.
 
 ----
 /emj The :cow: jumped over the :moon:
 11/16-21:41 <bougyman> The 🤠 🐮 🐄 jumped over the 🥮 🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘 🌙 🌚 🌛 🌜 🌝 🎑
 ----
 
-Get more exact
+#### Get more exact
 
 ----
 /emj -e The :cow: jumped over the :full moon:.
