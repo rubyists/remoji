@@ -70,6 +70,13 @@ Same search without any metadata (-n)
 🐱 🐈
 ----
 
+Using strings inline with emoji with -n
+
+----
+% emj -n S:The blue S:Cow cow
+The 💙 📘 🔵 🟦 🔷 🔹 Cow 🤠 🐮 🐄
+----
+
 Show all categories / subcategories
 
 ----

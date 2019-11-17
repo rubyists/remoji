@@ -117,10 +117,14 @@ class Remoji # rubocop:disable Metrics/ClassLength
 
     found = []
     args.each do |arg|
-      found += find_in_filter_array(arg)
+      found << if arg.match?(/^S:/)
+                 arg
+               else
+                 find_in_filter_array(arg)
+               end
     end
 
-    output found
+    output found.compact.flatten 1
   end
 
   def find_in_filter_array(arg)
@@ -197,19 +201,23 @@ class Remoji # rubocop:disable Metrics/ClassLength
     exit code
   end
 
-  def output(them) # rubocop:disab
+  def output(them)
+    puts display(them)
+  end
+
+  def display(them) # rubocop:disab
     die! 'No matching emojis found', 2 if them.empty?
 
-    them.each do |name, attrs|
+    them.map do |name, attrs|
+      attrs ||= { sym: name.split('S:').last, type: 'Raw String' }
       if @options.no
-        print "#{attrs[:sym]} "
+        attrs[:sym]
       elsif @options.verbose.positive?
-        puts "#{name}: #{attrs}"
+        "#{name}: #{attrs}"
       else
-        puts "#{attrs[:sym]} : #{name}"
+        [attrs[:sym], name].join(' : ')
       end
-    end
-    print "\n" if @options.no
+    end.join(' ').squeeze(' ')
   end
 end
 
