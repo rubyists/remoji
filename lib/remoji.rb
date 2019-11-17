@@ -208,6 +208,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
   def display(them) # rubocop:disab
     die! 'No matching emojis found', 2 if them.empty?
 
+    join_char = @options.no ? ' ' : "\n"
     them.map do |name, attrs|
       attrs ||= { sym: name.split('S:').last, type: 'Raw String' }
       if @options.no
@@ -217,7 +218,7 @@ class Remoji # rubocop:disable Metrics/ClassLength
       else
         [attrs[:sym], name].join(' : ')
       end
-    end.join(' ').squeeze(' ')
+    end.join(join_char).squeeze(join_char)
   end
 end
 
