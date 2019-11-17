@@ -148,8 +148,8 @@ class Remoji # rubocop:disable Metrics/ClassLength
   end
 
   def replace_emojis(string)
-    string.gsub(/:[^:]+:/) do |r|
-      string_for r[1..-2]
+    string.gsub(/:[^:]*:/) do |r|
+      r == '::' ? '' : string_for(r[1..-2])
     end
   end
 
